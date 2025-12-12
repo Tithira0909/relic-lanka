@@ -10085,3 +10085,31 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+.intro-banner {
+  background-image: url(../images/bg_1.jpg);
+  background-color: #343a40;
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.intro-banner h1 {
+  color: #fff;
+  font-weight: 700;
+}
+
+.outro-banner {
+  background-image: url(../images/bg_2.jpg);
+  background-color: #343a40;
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.outro-banner h1 {
+  color: #fff;
+  font-weight: 700;
+}
