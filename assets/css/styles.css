@@ -1,0 +1,250 @@
+:root {
+  --primary: #006994;
+  --secondary: #2E8B57;
+  --accent: #FFD700;
+  --dark: #333;
+  --light: #f4f4f4;
+  --white: #fff;
+  --gray: #888;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --max-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+  background: var(--light);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Layout */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; color: var(--primary); }
+h3 { font-size: 1.5rem; }
+
+/* Navigation */
+nav {
+  background: var(--dark);
+  color: var(--white);
+  padding: 1rem 0;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+nav ul {
+  display: flex;
+  gap: 20px;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* Sections / Blocks */
+section {
+  padding: 40px 0;
+  background: var(--white);
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.block-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.block-title h2 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Grids */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-meta {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+.btn:hover {
+  background: #00567a;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+
+/* States */
+.state {
+  text-align: center;
+  padding: 40px;
+  color: var(--gray);
+}
+
+.loading { font-style: italic; }
+.empty { font-weight: bold; }
+
+/* Home Hero */
+#homeHeroBlock {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../images/bg_1.jpg') center/cover;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  text-align: center;
+}
+
+/* Tour Detail Specifics */
+.tour-header {
+  position: relative;
+  height: 400px;
+  background: #333;
+  color: var(--white);
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+
+.tour-header img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.tour-header-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.itinerary-day {
+  border-left: 3px solid var(--primary);
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+.destination-block, .experience-block {
+  margin-bottom: 40px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 15px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Footer */
+footer {
+  background: var(--dark);
+  color: var(--white);
+  padding: 40px 0;
+  text-align: center;
+  margin-top: 40px;
+}

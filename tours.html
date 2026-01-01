@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Relic Lanka Tours - Home</title>
+  <title>Relic Lanka Tours - All Tours</title>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -21,35 +21,24 @@
     </div>
   </nav>
 
-  <!-- Hero Block -->
-  <div id="homeHeroBlock">
+  <!-- Tours Header Block -->
+  <div id="toursHeaderBlock" class="block-title" style="margin-top: 40px;">
     <div class="container">
-      <h1>Welcome to Sri Lanka</h1>
-      <p>Experience the beauty of the pearl of the Indian Ocean</p>
-      <a href="tours.html" class="btn" style="margin-top: 20px;">View Tours</a>
+      <h1>Our Tours</h1>
+      <p>Explore our wide range of packages designed for you.</p>
     </div>
   </div>
 
-  <!-- Featured Tours Block -->
-  <section id="homeFeaturedToursBlock">
-    <div class="container">
-      <div class="block-title">
-        <h2>Featured Tours</h2>
-      </div>
-      <div id="featuredToursGrid" class="grid">
-        <div class="state loading">Loading tours...</div>
-      </div>
-    </div>
-  </section>
+  <!-- Filter/Search -->
+  <div class="container" style="margin-bottom: 30px;">
+    <input type="text" id="toursSearchInput" placeholder="Filter tours by name..." style="max-width: 400px; margin: 0 auto; display: block;">
+  </div>
 
-  <!-- Gallery Block -->
-  <section id="homeGalleryBlock">
+  <!-- Tours List Block -->
+  <section id="toursListBlock">
     <div class="container">
-      <div class="block-title">
-        <h2>Gallery</h2>
-      </div>
-      <div id="homeGalleryGrid" class="grid">
-        <div class="state loading">Loading gallery...</div>
+      <div id="toursGrid" class="grid">
+        <div class="state loading">Loading tours...</div>
       </div>
     </div>
   </section>
@@ -73,17 +62,7 @@
     </div>
   </template>
 
-  <template id="galleryItemTemplate">
-    <div class="card">
-      <img src="" alt="Gallery Image" style="height: 250px;">
-      <div class="card-content" style="padding: 10px;">
-        <h3 class="card-title" style="font-size: 1rem; margin: 0;"></h3>
-        <p style="font-size: 0.8rem; color: #888;"></p>
-      </div>
-    </div>
-  </template>
-
   <script src="assets/js/api.js"></script>
-  <script src="assets/js/home.js"></script>
+  <script src="assets/js/tours.js"></script>
 </body>
 </html>

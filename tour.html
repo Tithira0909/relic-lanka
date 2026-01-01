@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Detail - Relic Lanka Tours</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="logo">Relic Lanka Tours</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tours.html">Tours</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="search.html">Search</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="loadingState" class="state loading">Loading Tour...</div>
+
+  <div id="tourContent" style="display: none;">
+    <!-- 1. Tour Summary Block (Header) -->
+    <div id="tourSummaryBlock" class="tour-header">
+      <img id="tourHeroImage" src="" alt="">
+      <div class="tour-header-content">
+        <div class="container">
+          <h1 id="tourName">Tour Name</h1>
+          <p id="tourDuration" class="card-meta" style="color: #fff;">X Days / Y Nights</p>
+          <p id="tourShortDesc">Short Description</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- 2. Description Block -->
+      <section id="tourDescriptionBlock">
+        <h3>Description</h3>
+        <div id="tourFullDescription"></div>
+      </section>
+
+      <!-- 3 & 4. Inclusions & Activities -->
+      <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+        <div id="tourInclusionBlock">
+          <h3>Inclusions</h3>
+          <ul id="tourInclusionList" style="list-style: disc; padding-left: 20px;"></ul>
+        </div>
+        <div id="tourActivitiesBlock">
+          <h3>Included Activities</h3>
+          <ul id="tourActivitiesList" style="list-style: disc; padding-left: 20px;"></ul>
+        </div>
+      </div>
+
+      <!-- 5. Itinerary Block -->
+      <section id="tourItineraryBlock">
+        <h3>Itinerary</h3>
+        <div id="tourItineraryList"></div>
+      </section>
+
+      <!-- 6. Destinations Block -->
+      <section id="tourDestinationsBlock">
+        <h3>Destinations</h3>
+        <div id="tourDestinationsList"></div>
+      </section>
+
+      <!-- 7. Experiences Block -->
+      <section id="tourExperiencesBlock">
+        <h3>Experiences</h3>
+        <div id="tourExperiencesList"></div>
+      </section>
+
+      <!-- 8. Inquiry Block -->
+      <section id="tourInquiryBlock">
+        <h3>Book This Tour</h3>
+        <form id="inquiryForm" style="max-width: 600px; margin: 0 auto;">
+          <input type="hidden" name="tourId" id="inquiryTourId">
+          <div class="form-group"><input type="text" name="fullName" placeholder="Full Name" required></div>
+          <div class="form-group"><input type="email" name="email" placeholder="Email" required></div>
+          <div class="form-group"><input type="text" name="phone" placeholder="Phone"></div>
+          <div class="form-group"><input type="text" name="country" placeholder="Country"></div>
+          <div class="form-group"><input type="text" name="travelDates" placeholder="Travel Dates"></div>
+          <div class="form-group"><input type="number" name="travelersCount" placeholder="Number of Travelers"></div>
+          <div class="form-group"><textarea name="message" rows="5" placeholder="Message" required></textarea></div>
+          <button type="submit" class="btn" style="width: 100%;">Send Inquiry</button>
+        </form>
+      </section>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Relic Lanka Tours</p>
+    </div>
+  </footer>
+
+  <!-- Templates -->
+  <template id="itineraryItemTemplate">
+    <div class="itinerary-day">
+      <h4 class="day-title"></h4>
+      <p class="day-route" style="font-weight: bold; color: #555; font-size: 0.9rem;"></p>
+      <p class="day-details"></p>
+    </div>
+  </template>
+
+  <template id="destinationItemTemplate">
+    <div class="destination-block card">
+      <div class="card-content">
+        <h4 class="dest-name"></h4>
+        <p class="dest-route" style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"></p>
+        <p class="dest-desc"></p>
+
+        <!-- Images Grid inside Destination -->
+        <div class="gallery-grid"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="experienceItemTemplate">
+    <div class="experience-block card">
+      <div class="card-content">
+        <h4 class="exp-title"></h4>
+        <p class="exp-desc"></p>
+        <ul class="exp-items" style="margin-top: 10px; list-style: circle; padding-left: 20px; font-size: 0.9rem; color: #555;"></ul>
+        <div class="gallery-grid"></div>
+      </div>
+    </div>
+  </template>
+
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/tour-detail.js"></script>
+</body>
+</html>
