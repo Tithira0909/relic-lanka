@@ -367,108 +367,11 @@
 						<h2 class="mb-4">Tour Destination</h2>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/img_1.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">8 Days Tour</span>
-								<h3><a href="#">Sigiriya Rock Fortress</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Sigiriya, Sri Lanka</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-mountains"></span>Near Mountain</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/img_6.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">10 Days Tour</span>
-								<h3><a href="#">Mirissa Beach</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Mirissa, Sri Lanka</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/img_3.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">7 Days Tour</span>
-								<h3><a href="#">Nine Arch Bridge</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Ella, Sri Lanka</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-mountains"></span>Near Mountain</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/img_2.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">8 Days Tour</span>
-								<h3><a href="#">Temple of the Tooth</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Kandy, Sri Lanka</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-mountains"></span>Cultural Site</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/img_5.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">10 Days Tour</span>
-								<h3><a href="#">Yala National Park</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Yala, Sri Lanka</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-mountains"></span>Wildlife Safari</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4 ftco-animate">
-						<div class="project-wrap">
-							<a href="#" class="img" style="background-image: url(images/img_4.jpg);">
-								<span class="price">$550/person</span>
-							</a>
-							<div class="text p-4">
-								<span class="days">7 Days Tour</span>
-								<h3><a href="#">Galle Fort</a></h3>
-								<p class="location"><span class="fa fa-map-marker"></span> Galle, Sri Lanka</p>
-								<ul>
-									<li><span class="flaticon-shower"></span>2</li>
-									<li><span class="flaticon-king-size"></span>3</li>
-									<li><span class="flaticon-sun-umbrella"></span>Near Beach</li>
-								</ul>
-							</div>
+				<div class="row" id="featured-tours">
+					<!-- Dynamic Content -->
+					<div class="col-12 text-center">
+						<div class="spinner-border text-primary" role="status">
+							<span class="sr-only">Loading...</span>
 						</div>
 					</div>
 				</div>
@@ -813,5 +716,12 @@
 			<script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
 			<script src="js/telescope.js"></script>
 			
+			<script src="js/api-integration.js"></script>
+			<script>
+				document.addEventListener('DOMContentLoaded', () => {
+					fetchAndRenderTours('#featured-tours', 6);
+					fetchAndRenderGallery('.spotlight-images');
+				});
+			</script>
 		</body>
 		</html>

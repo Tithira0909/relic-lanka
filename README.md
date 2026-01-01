@@ -64,30 +64,14 @@ Ensure you have a MySQL database running. Create a database named `relic_lanka` 
    Access at `http://localhost:5173`.
 
 ### 4. Frontend Integration
-1. Include `js/api-integration.js` in your HTML files.
-2. Call the rendering functions.
+The frontend integration scripts have been applied to the following files:
+- `index.html`: Home page gallery and featured tours.
+- `destination.html`: Tours list page.
+- `tour-detail.html`: Dynamic tour detail page (created).
+- `about.html`: Dynamic about us content.
+- `contact.html`: Inquiry form integration.
 
-**Example (index.html):**
-```html
-<script src="js/api-integration.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    fetchAndRenderTours('.spotlight-images', 6); // Renders tours
-    fetchAndRenderGallery('.gallery-container'); // Renders gallery
-  });
-</script>
-```
-
-**Example (tour-detail.html):**
-```html
-<script src="js/api-integration.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    fetchAndRenderTourDetail();
-    setupInquiryForm('#inquiryForm', 'TOUR', tourId); // tourId needs to be extracted from response if needed
-  });
-</script>
-```
+You can modify `js/api-integration.js` to adjust rendering logic.
 
 ## Features
 
