@@ -1,0 +1,171 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  role          String    @default("ADMIN")
+  createdAt     DateTime  @default(now())
+  lastLoginAt   DateTime?
+}
+
+model SiteSetting {
+  id           String   @id @default(cuid())
+  siteName     String   @default("Relic Lanka Tours")
+  logoUrl      String?
+  contactEmail String?
+  phone        String?
+  whatsapp     String?
+  address      String?
+  socials      Json?    // Stores array of { platform: string, url: string }
+  updatedAt    DateTime @updatedAt
+}
+
+model Page {
+  id             String   @id @default(cuid())
+  key            String   @unique // ABOUT, CONTACT
+  title          String
+  contentHtml    String   @db.LongText
+  seoTitle       String?
+  seoDescription String?
+  updatedAt      DateTime @updatedAt
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  title     String?
+  caption   String?
+  imageUrl  String
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Tour {
+  id                 String             @id @default(cuid())
+  name               String
+  slug               String             @unique
+  shortDescription   String             @db.Text
+  description        String             @db.LongText
+  days               Int
+  nights             Int
+  inclusion          Json               // Array of strings
+  includedActivities Json               // Array of strings
+  heroImageUrl       String?
+  seoTitle           String?
+  seoDescription     String?
+  ogImageUrl         String?
+  isPublished        Boolean            @default(false)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  itineraryDays      TourItineraryDay[]
+  destinations       Destination[]
+  experiences        Experience[]
+  inquiries          Inquiry[]
+}
+
+model TourItineraryDay {
+  id        String  @id @default(cuid())
+  tourId    String
+  tour      Tour    @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  dayNumber Int
+  title     String?
+  routeText String? @db.Text
+  details   String? @db.Text
+  sortOrder Int     @default(0)
+
+  @@index([tourId])
+}
+
+model Destination {
+  id            String             @id @default(cuid())
+  tourId        String
+  tour          Tour               @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  name          String
+  slug          String
+  description   String             @db.Text
+  mapImageUrl   String?
+  routeImageUrl String?
+  routeText     String?            @db.Text
+  sortOrder     Int                @default(0)
+
+  images        DestinationImage[]
+
+  @@index([tourId])
+}
+
+model DestinationImage {
+  id            String      @id @default(cuid())
+  destinationId String
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  imageUrl      String
+  caption       String?
+  sortOrder     Int         @default(0)
+
+  @@index([destinationId])
+}
+
+model Experience {
+  id             String            @id @default(cuid())
+  tourId         String
+  tour           Tour              @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  title          String
+  description    String?           @db.Text
+  adventureItems Json              // Array of strings
+  sortOrder      Int               @default(0)
+
+  images         ExperienceImage[]
+
+  @@index([tourId])
+}
+
+model ExperienceImage {
+  id           String     @id @default(cuid())
+  experienceId String
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  imageUrl     String
+  caption      String?
+  sortOrder    Int        @default(0)
+
+  @@index([experienceId])
+}
+
+model Inquiry {
+  id             String   @id @default(cuid())
+  type           String   // TOUR, GENERAL
+  tourId         String?
+  tour           Tour?    @relation(fields: [tourId], references: [id])
+  fullName       String
+  email          String
+  phone          String?
+  whatsapp       String?
+  country        String?
+  travelDates    String?
+  travelersCount Int?
+  message        String   @db.Text
+  status         String   @default("NEW") // NEW, CONTACTED, CLOSED
+  adminNotes     String?  @db.Text
+  createdAt      DateTime @default(now())
+
+  @@index([tourId])
+}
+
+model PageView {
+  id        String   @id @default(cuid())
+  tourId    String?
+  pageKey   String?
+  ipHash    String?
+  uaHash    String?
+  createdAt DateTime @default(now())
+}
