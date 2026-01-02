@@ -26,7 +26,9 @@ const API = {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }),
-  search: (q) => fetchAPI(`/search?q=${encodeURIComponent(q)}`)
+  search: (q) => fetchAPI(`/search?q=${encodeURIComponent(q)}`),
+  getFeaturedDestinations: () => fetchAPI('/destinations/featured'),
+  getFeaturedExperiences: () => fetchAPI('/experiences/featured')
 };
 
 // Helper to Render

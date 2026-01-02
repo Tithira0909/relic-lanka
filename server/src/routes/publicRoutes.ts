@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getPublicTours, getPublicTourBySlug } from '../controllers/tourController';
 import { getPublicGallery } from '../controllers/galleryController';
+import { getHomeDestinations, getHomeExperiences } from '../controllers/homeController';
 import { getPageByKey } from '../controllers/pageController';
 import { createInquiry } from '../controllers/inquiryController';
 import { getSettings } from '../controllers/settingController';
@@ -21,6 +22,10 @@ router.get('/tours/:slug', getPublicTourBySlug);
 
 // Gallery
 router.get('/gallery', getPublicGallery);
+
+// Home Sections (Destinations/Experiences)
+router.get('/destinations/featured', getHomeDestinations);
+router.get('/experiences/featured', getHomeExperiences);
 
 // Pages (About, Contact)
 router.get('/pages/:key', getPageByKey);
