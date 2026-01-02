@@ -6,3 +6,7 @@ server/dist/
 admin/dist/
 .DS_Store
 *.log
+mysql_data/
+mysql_error.log
+mysql_data/
+mysql_error.log
