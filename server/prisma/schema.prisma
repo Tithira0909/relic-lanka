@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -27,7 +27,7 @@ model SiteSetting {
   phone        String?
   whatsapp     String?
   address      String?
-  socials      String?    // Stores JSON string of array of { platform: string, url: string }
+  socials      Json?
   updatedAt    DateTime @updatedAt
 }
 
@@ -35,7 +35,7 @@ model Page {
   id             String   @id @default(cuid())
   key            String   @unique // ABOUT, CONTACT
   title          String
-  contentHtml    String
+  contentHtml    String   @db.LongText
   seoTitle       String?
   seoDescription String?
   updatedAt      DateTime @updatedAt
@@ -55,12 +55,12 @@ model Tour {
   id                 String             @id @default(cuid())
   name               String
   slug               String             @unique
-  shortDescription   String
-  description        String
+  shortDescription   String   @db.Text
+  description        String   @db.LongText
   days               Int
   nights             Int
-  inclusion          String             // Stores JSON string of array of strings
-  includedActivities String             // Stores JSON string of array of strings
+  inclusion          Json
+  includedActivities Json
   heroImageUrl       String?
   seoTitle           String?
   seoDescription     String?
@@ -81,8 +81,8 @@ model TourItineraryDay {
   tour      Tour    @relation(fields: [tourId], references: [id], onDelete: Cascade)
   dayNumber Int
   title     String?
-  routeText String?
-  details   String?
+  routeText String? @db.Text
+  details   String? @db.Text
   sortOrder Int     @default(0)
 
   @@index([tourId])
@@ -94,10 +94,10 @@ model Destination {
   tour          Tour?              @relation(fields: [tourId], references: [id], onDelete: Cascade)
   name          String
   slug          String
-  description   String
+  description   String   @db.Text
   mapImageUrl   String?
   routeImageUrl String?
-  routeText     String?
+  routeText     String?  @db.Text
   sortOrder     Int                @default(0)
 
   images        DestinationImage[]
@@ -121,8 +121,8 @@ model Experience {
   tourId         String?
   tour           Tour?             @relation(fields: [tourId], references: [id], onDelete: Cascade)
   title          String
-  description    String?
-  adventureItems String            // Stores JSON string of array of strings
+  description    String? @db.Text
+  adventureItems Json
   sortOrder      Int               @default(0)
 
   images         ExperienceImage[]
@@ -153,9 +153,9 @@ model Inquiry {
   country        String?
   travelDates    String?
   travelersCount Int?
-  message        String
+  message        String   @db.Text
   status         String   @default("NEW") // NEW, CONTACTED, CLOSED
-  adminNotes     String?
+  adminNotes     String?  @db.Text
   createdAt      DateTime @default(now())
 
   @@index([tourId])

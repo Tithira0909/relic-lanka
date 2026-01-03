@@ -25,13 +25,7 @@ export const getAdminExperiences = async (req: Request, res: Response) => {
       }
     });
 
-    // Parse JSON
-    const parsed = experiences.map(exp => ({
-        ...exp,
-        adventureItems: JSON.parse(exp.adventureItems as unknown as string || '[]')
-    }));
-
-    res.json(parsed);
+    res.json(experiences);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch experiences' });
   }
@@ -46,12 +40,7 @@ export const getExperienceById = async (req: Request, res: Response) => {
     });
     if (!experience) return res.status(404).json({ error: 'Experience not found' });
 
-    const parsed = {
-        ...experience,
-        adventureItems: JSON.parse(experience.adventureItems as unknown as string || '[]')
-    };
-
-    res.json(parsed);
+    res.json(experience);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch experience' });
   }
@@ -65,7 +54,7 @@ export const createExperience = async (req: Request, res: Response) => {
       data: {
         title: data.title,
         description: data.description,
-        adventureItems: JSON.stringify(data.adventureItems),
+        adventureItems: data.adventureItems,
         sortOrder: data.sortOrder,
         tourId: data.tourId,
         images: {
@@ -90,7 +79,7 @@ export const updateExperience = async (req: Request, res: Response) => {
       data: {
         title: data.title,
         description: data.description,
-        adventureItems: JSON.stringify(data.adventureItems),
+        adventureItems: data.adventureItems,
         sortOrder: data.sortOrder,
         tourId: data.tourId,
       }

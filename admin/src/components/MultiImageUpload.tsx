@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../api/axios';
-import { X, Plus, GripVertical } from 'lucide-react';
+import { X, Plus } from 'lucide-react';
 
 interface MultiImageUploadProps {
   images: { imageUrl: string; caption?: string; sortOrder?: number }[];

@@ -24,12 +24,7 @@ export const getSettings = async (req: Request, res: Response) => {
       settings = await prisma.siteSetting.create({ data: {} });
     }
 
-    const parsedSettings = {
-        ...settings,
-        socials: JSON.parse(settings.socials as unknown as string || '[]')
-    };
-
-    res.json(parsedSettings);
+    res.json(settings);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch settings' });
   }
@@ -46,14 +41,14 @@ export const updateSettings = async (req: Request, res: Response) => {
         where: { id: settings.id },
         data: {
           ...data,
-          socials: data.socials ? JSON.stringify(data.socials) : undefined
+          socials: data.socials ? data.socials : undefined
         },
       });
     } else {
       settings = await prisma.siteSetting.create({
         data: {
           ...data,
-          socials: data.socials ? JSON.stringify(data.socials) : undefined
+          socials: data.socials ? data.socials : undefined
         }
       });
     }

@@ -57,8 +57,8 @@ async function main() {
       description: 'Full description of the heritage tour...',
       days: 10,
       nights: 9,
-      inclusion: JSON.stringify(['Airport Transfer', 'Breakfast', 'Guide']),
-      includedActivities: JSON.stringify(['Sigiriya Climb', 'Kandy Temple']),
+      inclusion: ['Airport Transfer', 'Breakfast', 'Guide'],
+      includedActivities: ['Sigiriya Climb', 'Kandy Temple'],
       isPublished: true,
       itineraryDays: {
         create: [

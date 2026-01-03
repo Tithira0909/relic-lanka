@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import api from '../../api/axios';
 import { ArrowLeft } from 'lucide-react';
 import MultiImageUpload from '../../components/MultiImageUpload';
@@ -16,7 +16,7 @@ const DestinationEditor: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isEdit = !!id;
-  const { register, handleSubmit, control, reset } = useForm<DestinationFormData>();
+  const { register, handleSubmit, reset } = useForm<DestinationFormData>();
   const [images, setImages] = useState<{ imageUrl: string; caption?: string; sortOrder?: number }[]>([]);
   const [tours, setTours] = useState<{ id: string; name: string }[]>([]);
 

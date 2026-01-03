@@ -46,12 +46,7 @@ export const getHomeExperiences = async (req: Request, res: Response) => {
       }
     });
 
-    const parsedExperiences = experiences.map(exp => ({
-      ...exp,
-      adventureItems: JSON.parse(exp.adventureItems as unknown as string || '[]')
-    }));
-
-    res.json(parsedExperiences);
+    res.json(experiences);
   } catch (error) {
     console.error('Error fetching home experiences:', error);
     res.status(500).json({ error: 'Failed to fetch experiences' });
