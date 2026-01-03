@@ -13,9 +13,12 @@ import adminRoutes from './routes/adminRoutes';
 const app = express();
 
 // Middleware
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(cors({
-  origin: ENV.CORS_ORIGIN === '*' ? '*' : ENV.CORS_ORIGIN.split(','),
+  origin: true, // Allow any origin, including 'null' (for file://)
+  credentials: true
 }));
 app.use(morgan('dev'));
 app.use(express.json());
