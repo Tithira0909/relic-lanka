@@ -117,8 +117,20 @@ export const getPublicTourBySlug = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Tour not found' });
     }
 
-    res.json(tour);
+    // Parse JSON fields
+    const parsedTour = {
+      ...tour,
+      inclusion: JSON.parse(tour.inclusion as unknown as string || '[]'),
+      includedActivities: JSON.parse(tour.includedActivities as unknown as string || '[]'),
+      experiences: tour.experiences.map(exp => ({
+        ...exp,
+        adventureItems: JSON.parse(exp.adventureItems as unknown as string || '[]')
+      }))
+    };
+
+    res.json(parsedTour);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Failed to fetch tour' });
   }
 };
@@ -158,8 +170,8 @@ export const createTour = async (req: Request, res: Response) => {
         description: data.description,
         days: data.days,
         nights: data.nights,
-        inclusion: data.inclusion,
-        includedActivities: data.includedActivities,
+        inclusion: JSON.stringify(data.inclusion),
+        includedActivities: JSON.stringify(data.includedActivities),
         heroImageUrl: data.heroImageUrl,
         seoTitle: data.seoTitle,
         seoDescription: data.seoDescription,
@@ -186,7 +198,7 @@ export const createTour = async (req: Request, res: Response) => {
           create: data.experiences?.map(exp => ({
             title: exp.title,
             description: exp.description,
-            adventureItems: exp.adventureItems,
+            adventureItems: JSON.stringify(exp.adventureItems),
             sortOrder: exp.sortOrder,
             images: {
               create: exp.images
@@ -224,8 +236,8 @@ export const updateTour = async (req: Request, res: Response) => {
           description: data.description,
           days: data.days,
           nights: data.nights,
-          inclusion: data.inclusion,
-          includedActivities: data.includedActivities,
+          inclusion: JSON.stringify(data.inclusion),
+          includedActivities: JSON.stringify(data.includedActivities),
           heroImageUrl: data.heroImageUrl,
           seoTitle: data.seoTitle,
           seoDescription: data.seoDescription,
@@ -327,7 +339,7 @@ export const updateTour = async (req: Request, res: Response) => {
                data: {
                  title: exp.title,
                  description: exp.description,
-                 adventureItems: exp.adventureItems,
+                 adventureItems: JSON.stringify(exp.adventureItems),
                  sortOrder: exp.sortOrder
                }
              });
@@ -338,7 +350,7 @@ export const updateTour = async (req: Request, res: Response) => {
                  tourId: id,
                  title: exp.title,
                  description: exp.description,
-                 adventureItems: exp.adventureItems,
+                 adventureItems: JSON.stringify(exp.adventureItems),
                  sortOrder: exp.sortOrder
                }
              });
