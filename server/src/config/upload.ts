@@ -32,7 +32,8 @@ if (ENV.STORAGE_PROVIDER === 's3' && ENV.S3_BUCKET && ENV.S3_ACCESS_KEY && ENV.S
   });
 } else {
   // Local storage fallback
-  const uploadDir = path.join(__dirname, '../../../uploads');
+  // Store in server/uploads
+  const uploadDir = path.join(process.cwd(), 'uploads');
   if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
   }

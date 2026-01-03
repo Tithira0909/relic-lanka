@@ -90,8 +90,8 @@ model TourItineraryDay {
 
 model Destination {
   id            String             @id @default(cuid())
-  tourId        String
-  tour          Tour               @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId        String?
+  tour          Tour?              @relation(fields: [tourId], references: [id], onDelete: Cascade)
   name          String
   slug          String
   description   String
@@ -118,8 +118,8 @@ model DestinationImage {
 
 model Experience {
   id             String            @id @default(cuid())
-  tourId         String
-  tour           Tour              @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId         String?
+  tour           Tour?             @relation(fields: [tourId], references: [id], onDelete: Cascade)
   title          String
   description    String?
   adventureItems String            // Stores JSON string of array of strings
