@@ -6,6 +6,7 @@
   <title>Tour Detail - Relic Lanka Tours</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -14,121 +15,160 @@
       <div class="logo">Relic Lanka Tours</div>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="tours.html">Tours</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="tours.html" class="active">Tours</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
         <li><a href="search.html">Search</a></li>
       </ul>
     </div>
   </nav>
 
-  <div id="loadingState" class="state loading">Loading Tour...</div>
+  <div id="loadingState" class="state loading" style="padding-top: 200px;">Loading Tour Details...</div>
 
   <div id="tourContent" style="display: none;">
-    <!-- 1. Tour Summary Block (Header) -->
-    <div id="tourSummaryBlock" class="tour-header">
-      <img id="tourHeroImage" src="" alt="">
-      <div class="tour-header-content">
-        <div class="container">
-          <h1 id="tourName">Tour Name</h1>
-          <p id="tourDuration" class="card-meta" style="color: #fff;">X Days / Y Nights</p>
-          <p id="tourShortDesc">Short Description</p>
-        </div>
+
+    <!-- Hero Section -->
+    <header class="hero-section" style="height: 80vh;">
+      <img id="tourHeroImage" src="" alt="" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; z-index: 0; border-radius: 0;">
+      <div class="overlay" style="z-index: 1;"></div>
+      <div class="hero-content" style="z-index: 2; text-align: center;">
+        <span id="tourDuration" style="display: inline-block; padding: 5px 15px; border: 1px solid white; border-radius: 20px; font-size: 0.9rem; margin-bottom: 20px; text-transform: uppercase;"></span>
+        <h1 id="tourName" style="font-size: 4rem; margin-bottom: 20px;">Tour Name</h1>
+        <p id="tourShortDesc" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto;">Short Description</p>
       </div>
-    </div>
+    </header>
 
     <div class="container">
+      <div class="tour-sidebar-layout">
 
-      <!-- 2. Description Block -->
-      <section id="tourDescriptionBlock">
-        <h3>Description</h3>
-        <div id="tourFullDescription"></div>
-      </section>
+        <!-- Main Content -->
+        <div class="tour-main-content">
 
-      <!-- 3 & 4. Inclusions & Activities -->
-      <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
-        <div id="tourInclusionBlock">
-          <h3>Inclusions</h3>
-          <ul id="tourInclusionList" style="list-style: disc; padding-left: 20px;"></ul>
+            <section class="tour-content-wrapper">
+                <h2 style="margin-bottom: 20px;">Overview</h2>
+                <div id="tourFullDescription" style="line-height: 1.8; color: var(--text-dark); margin-bottom: 40px;"></div>
+
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid #eee; padding-top: 40px;">
+                    <div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 20px; color: var(--secondary);">Inclusions</h3>
+                        <ul id="tourInclusionList" style="list-style: none; padding: 0;"></ul>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 20px; color: var(--secondary);">Experiences</h3>
+                        <ul id="tourActivitiesList" style="list-style: none; padding: 0;"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 style="margin-bottom: 40px; text-align: center;">Your Itinerary</h2>
+                <div id="tourItineraryList" class="timeline"></div>
+            </section>
+
+            <section>
+                <h2 style="margin-bottom: 40px; text-align: center;">Destinations</h2>
+                <div id="tourDestinationsList" class="grid" style="gap: 30px;"></div>
+            </section>
+
+            <section>
+                <h2 style="margin-bottom: 40px; text-align: center;">Experiences</h2>
+                <div id="tourExperiencesList" class="grid" style="gap: 30px;"></div>
+            </section>
+
         </div>
-        <div id="tourActivitiesBlock">
-          <h3>Included Activities</h3>
-          <ul id="tourActivitiesList" style="list-style: disc; padding-left: 20px;"></ul>
-        </div>
+
+        <!-- Sidebar -->
+        <aside class="tour-sidebar">
+            <div class="inquiry-card">
+                <h3>Book This Journey</h3>
+                <p style="margin-bottom: 30px;">Send us an inquiry and our agents will customize this trip for you.</p>
+
+                <form id="inquiryForm">
+                    <input type="hidden" name="tourId" id="inquiryTourId">
+                    <div class="form-group"><input type="text" name="fullName" class="form-control" placeholder="Full Name" required></div>
+                    <div class="form-group"><input type="email" name="email" class="form-control" placeholder="Email Address" required></div>
+                    <div class="form-group"><input type="text" name="phone" class="form-control" placeholder="Phone Number"></div>
+                    <div class="form-group">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" name="travelDates" class="form-control" placeholder="Dates">
+                            <input type="number" name="travelersCount" class="form-control" placeholder="Pax">
+                        </div>
+                    </div>
+                    <div class="form-group"><textarea name="message" rows="4" class="form-control" placeholder="Specific interests or requirements..." required></textarea></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; border: none;">Request Quote</button>
+                </form>
+            </div>
+        </aside>
+
       </div>
-
-      <!-- 5. Itinerary Block -->
-      <section id="tourItineraryBlock">
-        <h3>Itinerary</h3>
-        <div id="tourItineraryList"></div>
-      </section>
-
-      <!-- 6. Destinations Block -->
-      <section id="tourDestinationsBlock">
-        <h3>Destinations</h3>
-        <div id="tourDestinationsList"></div>
-      </section>
-
-      <!-- 7. Experiences Block -->
-      <section id="tourExperiencesBlock">
-        <h3>Experiences</h3>
-        <div id="tourExperiencesList"></div>
-      </section>
-
-      <!-- 8. Inquiry Block -->
-      <section id="tourInquiryBlock">
-        <h3>Book This Tour</h3>
-        <form id="inquiryForm" style="max-width: 600px; margin: 0 auto;">
-          <input type="hidden" name="tourId" id="inquiryTourId">
-          <div class="form-group"><input type="text" name="fullName" placeholder="Full Name" required></div>
-          <div class="form-group"><input type="email" name="email" placeholder="Email" required></div>
-          <div class="form-group"><input type="text" name="phone" placeholder="Phone"></div>
-          <div class="form-group"><input type="text" name="country" placeholder="Country"></div>
-          <div class="form-group"><input type="text" name="travelDates" placeholder="Travel Dates"></div>
-          <div class="form-group"><input type="number" name="travelersCount" placeholder="Number of Travelers"></div>
-          <div class="form-group"><textarea name="message" rows="5" placeholder="Message" required></textarea></div>
-          <button type="submit" class="btn" style="width: 100%;">Send Inquiry</button>
-        </form>
-      </section>
-
     </div>
   </div>
 
   <footer>
     <div class="container">
-      <p>&copy; 2026 Relic Lanka Tours</p>
+      <div class="footer-content">
+        <div class="footer-col">
+            <h3>Relic Lanka Tours</h3>
+            <p>Your gateway to the paradise island of Sri Lanka.</p>
+        </div>
+        <div class="footer-col">
+            <h3>Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tours.html">Tours</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Contact</h3>
+            <p>Email: info@reliclankatours.com</p>
+            <p>Phone: +94 77 123 4567</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Relic Lanka Tours. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
   <!-- Templates -->
   <template id="itineraryItemTemplate">
-    <div class="itinerary-day">
-      <h4 class="day-title"></h4>
-      <p class="day-route" style="font-weight: bold; color: #555; font-size: 0.9rem;"></p>
-      <p class="day-details"></p>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-day day-title"></div>
+      <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+          <p class="day-route" style="font-weight: 600; color: var(--secondary); margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;"></p>
+          <p class="day-details" style="color: var(--text-light); line-height: 1.7;"></p>
+      </div>
     </div>
   </template>
 
   <template id="destinationItemTemplate">
-    <div class="destination-block card">
-      <div class="card-content">
-        <h4 class="dest-name"></h4>
-        <p class="dest-route" style="font-size: 0.9rem; color: #666; margin-bottom: 10px;"></p>
-        <p class="dest-desc"></p>
-
-        <!-- Images Grid inside Destination -->
-        <div class="gallery-grid"></div>
+    <div class="tour-card" style="display: flex; flex-direction: row; height: auto; min-height: 200px;">
+      <div style="width: 40%; min-width: 200px; position: relative; overflow: hidden;">
+         <!-- We need to dynamically insert image here, JS helper might need update if logic assumes specific structure -->
+         <!-- The JS finds .gallery-grid. I'll put a placeholder here or just rely on JS -->
+         <div class="gallery-grid" style="height: 100%; width: 100%;"></div>
+         <!-- Wait, gallery-grid in JS appends images. I want the first image as cover. -->
+         <!-- The existing JS appends ALL images to gallery-grid. -->
+         <!-- I will style .gallery-grid to handle this. -->
+      </div>
+      <div style="padding: 25px; flex: 1;">
+        <h4 class="dest-name" style="font-size: 1.2rem; margin-bottom: 5px;"></h4>
+        <p class="dest-route" style="font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;"></p>
+        <p class="dest-desc" style="font-size: 0.9rem;"></p>
       </div>
     </div>
   </template>
 
   <template id="experienceItemTemplate">
-    <div class="experience-block card">
-      <div class="card-content">
-        <h4 class="exp-title"></h4>
-        <p class="exp-desc"></p>
-        <ul class="exp-items" style="margin-top: 10px; list-style: circle; padding-left: 20px; font-size: 0.9rem; color: #555;"></ul>
-        <div class="gallery-grid"></div>
+    <div class="tour-card">
+      <div style="padding: 25px;">
+        <h4 class="exp-title" style="font-size: 1.2rem;"></h4>
+        <p class="exp-desc" style="font-size: 0.95rem; margin-bottom: 15px;"></p>
+        <ul class="exp-items" style="list-style: none; padding: 0;"></ul>
+        <div class="gallery-grid" style="margin-top: 15px;"></div>
       </div>
     </div>
   </template>
