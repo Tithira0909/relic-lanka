@@ -119,6 +119,7 @@ export const getPublicTourBySlug = async (req: Request, res: Response) => {
 
     res.json(tour);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Failed to fetch tour' });
   }
 };

@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Relic Lanka Tours - All Tours</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -13,7 +15,7 @@
       <div class="logo">Relic Lanka Tours</div>
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="tours.html">Tours</a></li>
+        <li><a href="tours.html" class="active">Tours</a></li>
         <li><a href="about.html">About Us</a></li>
         <li><a href="contact.html">Contact Us</a></li>
         <li><a href="search.html">Search</a></li>
@@ -21,43 +23,78 @@
     </div>
   </nav>
 
-  <!-- Tours Header Block -->
-  <div id="toursHeaderBlock" class="block-title" style="margin-top: 40px;">
+  <!-- Hero Section -->
+  <section class="hero-section" style="background-image: url('images/bg_1.jpg');">
+    <div class="overlay"></div>
     <div class="container">
-      <h1>Our Tours</h1>
-      <p>Explore our wide range of packages designed for you.</p>
+      <div class="hero-content">
+        <h1>Explore Our Packages</h1>
+        <p>Discover the hidden gems of Sri Lanka with our curated tours.</p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Filter/Search -->
-  <div class="container" style="margin-bottom: 30px;">
-    <input type="text" id="toursSearchInput" placeholder="Filter tours by name..." style="max-width: 400px; margin: 0 auto; display: block;">
-  </div>
+  <!-- Search & Filter -->
+  <section class="search-section">
+    <div class="container">
+      <div class="search-box-wrapper">
+        <i class="fa fa-search search-icon"></i>
+        <input type="text" id="toursSearchInput" placeholder="Where do you want to go?" class="search-input">
+      </div>
+    </div>
+  </section>
 
   <!-- Tours List Block -->
   <section id="toursListBlock">
     <div class="container">
-      <div id="toursGrid" class="grid">
-        <div class="state loading">Loading tours...</div>
+      <div id="toursGrid" class="grid-tours">
+        <div class="state loading">Loading amazing journeys...</div>
       </div>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <p>&copy; 2026 Relic Lanka Tours</p>
+      <div class="footer-content">
+        <div class="footer-col">
+            <h3>Relic Lanka Tours</h3>
+            <p>Your gateway to the paradise island of Sri Lanka.</p>
+        </div>
+        <div class="footer-col">
+            <h3>Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tours.html">Tours</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Contact</h3>
+            <p>Email: info@reliclankatours.com</p>
+            <p>Phone: +94 77 123 4567</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Relic Lanka Tours. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
   <!-- Templates -->
   <template id="tourCardTemplate">
-    <div class="card">
-      <img src="" alt="Tour Image">
-      <div class="card-content">
-        <h3 class="card-title"></h3>
-        <p class="card-meta"></p>
-        <p class="short-desc" style="font-size: 0.9rem; margin-bottom: 15px;"></p>
-        <a href="" class="btn btn-small">View Details</a>
+    <div class="tour-card">
+      <div class="tour-card-img-wrapper">
+        <img src="" alt="Tour Image" class="tour-card-img">
+        <div class="tour-badge"><i class="fa fa-clock-o"></i> <span class="duration-text"></span></div>
+      </div>
+      <div class="tour-card-body">
+        <h3 class="tour-card-title"></h3>
+        <p class="tour-card-desc"></p>
+        <div class="tour-card-footer">
+            <span class="tour-price">View Details</span>
+            <a href="" class="btn btn-outline">Explore <i class="fa fa-arrow-right"></i></a>
+        </div>
       </div>
     </div>
   </template>

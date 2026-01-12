@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Image, Map, FileText, Mail, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Image, Map, MapPin, Compass, FileText, Mail, Settings, LogOut } from 'lucide-react';
 import clsx from 'clsx';
 
 const DashboardLayout: React.FC = () => {
@@ -11,6 +11,8 @@ const DashboardLayout: React.FC = () => {
   const navItems = [
     { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
     { label: 'Tours', path: '/admin/tours', icon: Map },
+    { label: 'Destinations', path: '/admin/destinations', icon: MapPin },
+    { label: 'Experiences', path: '/admin/experiences', icon: Compass },
     { label: 'Gallery', path: '/admin/gallery', icon: Image },
     { label: 'Pages', path: '/admin/pages', icon: FileText },
     { label: 'Inquiries', path: '/admin/inquiries', icon: Mail },

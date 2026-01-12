@@ -27,7 +27,7 @@ model SiteSetting {
   phone        String?
   whatsapp     String?
   address      String?
-  socials      Json?    // Stores array of { platform: string, url: string }
+  socials      Json?
   updatedAt    DateTime @updatedAt
 }
 
@@ -55,12 +55,12 @@ model Tour {
   id                 String             @id @default(cuid())
   name               String
   slug               String             @unique
-  shortDescription   String             @db.Text
-  description        String             @db.LongText
+  shortDescription   String   @db.Text
+  description        String   @db.LongText
   days               Int
   nights             Int
-  inclusion          Json               // Array of strings
-  includedActivities Json               // Array of strings
+  inclusion          Json
+  includedActivities Json
   heroImageUrl       String?
   seoTitle           String?
   seoDescription     String?
@@ -90,14 +90,14 @@ model TourItineraryDay {
 
 model Destination {
   id            String             @id @default(cuid())
-  tourId        String
-  tour          Tour               @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId        String?
+  tour          Tour?              @relation(fields: [tourId], references: [id], onDelete: Cascade)
   name          String
   slug          String
-  description   String             @db.Text
+  description   String   @db.Text
   mapImageUrl   String?
   routeImageUrl String?
-  routeText     String?            @db.Text
+  routeText     String?  @db.Text
   sortOrder     Int                @default(0)
 
   images        DestinationImage[]
@@ -118,11 +118,11 @@ model DestinationImage {
 
 model Experience {
   id             String            @id @default(cuid())
-  tourId         String
-  tour           Tour              @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId         String?
+  tour           Tour?             @relation(fields: [tourId], references: [id], onDelete: Cascade)
   title          String
-  description    String?           @db.Text
-  adventureItems Json              // Array of strings
+  description    String? @db.Text
+  adventureItems Json
   sortOrder      Int               @default(0)
 
   images         ExperienceImage[]

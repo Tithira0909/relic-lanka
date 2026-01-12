@@ -11,6 +11,10 @@ import PageList from './pages/Pages/PageList';
 import PageEditor from './pages/Pages/PageEditor';
 import InquiryList from './pages/Inquiries/InquiryList';
 import Settings from './pages/Settings/Settings';
+import DestinationList from './pages/Destinations/DestinationList';
+import DestinationEditor from './pages/Destinations/DestinationEditor';
+import ExperienceList from './pages/Experiences/ExperienceList';
+import ExperienceEditor from './pages/Experiences/ExperienceEditor';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isLoading } = useAuth();
@@ -36,6 +40,14 @@ const App: React.FC = () => {
             <Route path="tours" element={<ToursList />} />
             <Route path="tours/new" element={<TourEditor />} />
             <Route path="tours/:id/edit" element={<TourEditor />} />
+
+            <Route path="destinations" element={<DestinationList />} />
+            <Route path="destinations/new" element={<DestinationEditor />} />
+            <Route path="destinations/:id/edit" element={<DestinationEditor />} />
+
+            <Route path="experiences" element={<ExperienceList />} />
+            <Route path="experiences/new" element={<ExperienceEditor />} />
+            <Route path="experiences/:id/edit" element={<ExperienceEditor />} />
 
             <Route path="gallery" element={<GalleryList />} />
 

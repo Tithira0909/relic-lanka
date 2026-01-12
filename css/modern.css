@@ -1,0 +1,162 @@
+/* Modern Styling Overrides */
+
+:root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --primary-color: #f85959; /* Keeping existing branding but defining it */
+    --text-color: #555;
+    --bg-light: #f9f9f9;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-color);
+    line-height: 1.8;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+/* Sections Padding */
+.ftco-section {
+    padding: 7em 0; /* Increase padding for more breathability */
+}
+
+@media (max-width: 768px) {
+    .ftco-section {
+        padding: 4em 0;
+    }
+}
+
+/* Heading Improvements */
+.heading-section h2 {
+    font-size: 3rem;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.heading-section p {
+    font-size: 1.1rem;
+    color: #777;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Cards (Project/Destination) Modernization */
+.project {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.project:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2);
+}
+
+.project .img {
+    height: 350px; /* Taller images */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Text Overlay in Cards */
+.project .text {
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    opacity: 1; /* Always visible for better UX, or keep hover effect but modernized */
+}
+
+.project .text span {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+}
+
+.project .text h3 {
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+.project .text h3 a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Navbar Modernization */
+.ftco-navbar-light {
+    background: transparent !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.ftco-navbar-light.scrolled {
+    background: #fff !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+.ftco-navbar-light .navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: #fff;
+}
+
+.ftco-navbar-light.scrolled .navbar-brand {
+    color: #000;
+}
+
+.ftco-navbar-light .nav-link {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Intro Banner Text */
+.intro-banner h1, .outro-banner h1 {
+    font-family: var(--font-heading);
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 30px; /* Pill shape */
+    padding: 12px 30px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 20px rgba(248, 89, 89, 0.3);
+}
+
+.btn-primary:hover {
+    background: #ff3333;
+    border-color: #ff3333;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(248, 89, 89, 0.4);
+}
+
+/* Map Section */
+.img-fluid {
+    border-radius: 8px;
+}

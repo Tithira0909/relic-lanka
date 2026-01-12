@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('toursGrid');
     if (!grid) return;
 
-    grid.innerHTML = '<div class="state loading">Loading...</div>';
+    // Preserve loading state styling
+    grid.innerHTML = '<div class="state loading">Loading amazing journeys...</div>';
 
     try {
       const response = await API.getTours(query);
@@ -13,18 +14,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const template = document.getElementById('tourCardTemplate');
         const clone = template.content.cloneNode(true);
 
-        const img = clone.querySelector('img');
-        img.src = tour.heroImageUrl || '';
-        img.onerror = () => { img.src = 'https://via.placeholder.com/400x200?text=No+Image'; };
+        const img = clone.querySelector('.tour-card-img');
+        if (img) {
+            img.src = tour.heroImageUrl || 'images/destination-1.jpg'; // Better fallback
+            img.onerror = () => { img.src = 'images/destination-1.jpg'; };
+        }
 
-        clone.querySelector('.card-title').textContent = tour.name;
-        clone.querySelector('.card-meta').textContent = `${tour.days} Days / ${tour.nights} Nights`;
-        clone.querySelector('.short-desc').textContent = tour.shortDescription;
-        clone.querySelector('a').href = `tour.html?slug=${tour.slug}`;
+        const titleEl = clone.querySelector('.tour-card-title');
+        if (titleEl) titleEl.textContent = tour.name;
+
+        const durationEl = clone.querySelector('.duration-text');
+        if (durationEl) durationEl.textContent = `${tour.days} Days / ${tour.nights} Nights`;
+
+        const descEl = clone.querySelector('.tour-card-desc');
+        if (descEl) descEl.textContent = tour.shortDescription;
+
+        const linkEl = clone.querySelector('a');
+        if (linkEl) linkEl.href = `tour.html?slug=${tour.slug}`;
+
         return clone;
-      }, 'No tours found');
+      }, 'No tours found matching your search.');
     } catch (e) {
-      grid.innerHTML = '<div class="state empty">Failed to load tours</div>';
+      console.error(e);
+      grid.innerHTML = '<div class="state empty">Failed to load tours. Please try again later.</div>';
     }
   };
 
