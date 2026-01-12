@@ -1,9 +1,11 @@
 node_modules/
 server/node_modules/
 admin/node_modules/
+client/node_modules/
 dist/
 server/dist/
 admin/dist/
+client/dist/
 .DS_Store
 *.log
 mysql_data/
