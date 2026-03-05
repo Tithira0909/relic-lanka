@@ -10,8 +10,12 @@ const tourSchema = z.object({
   description: z.string(),
   days: z.number().int().min(1),
   nights: z.number().int().min(0),
+  price: z.number().optional().nullable(),
+  videoUrl: z.string().optional().nullable(),
   inclusion: z.array(z.string()),
   includedActivities: z.array(z.string()),
+  excludes: z.array(z.string()).optional(),
+  complementary: z.array(z.string()).optional(),
   heroImageUrl: z.string().optional(),
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),
@@ -23,6 +27,7 @@ const tourSchema = z.object({
     routeText: z.string().optional(),
     details: z.string().optional(),
     sortOrder: z.number().optional(),
+    images: z.array(z.string()).optional(),
   })).optional(),
 
   destinations: z.array(z.object({
@@ -159,15 +164,26 @@ export const createTour = async (req: Request, res: Response) => {
         description: data.description,
         days: data.days,
         nights: data.nights,
+        price: data.price,
+        videoUrl: data.videoUrl,
         inclusion: data.inclusion,
         includedActivities: data.includedActivities,
+        excludes: data.excludes || [],
+        complementary: data.complementary || [],
         heroImageUrl: data.heroImageUrl,
         seoTitle: data.seoTitle,
         seoDescription: data.seoDescription,
         isPublished: data.isPublished || false,
 
         itineraryDays: {
-          create: data.itineraryDays
+          create: data.itineraryDays?.map(d => ({
+            dayNumber: d.dayNumber,
+            title: d.title,
+            routeText: d.routeText,
+            details: d.details,
+            sortOrder: d.sortOrder,
+            images: d.images || []
+          }))
         },
         destinations: {
           create: data.destinations?.map(dest => ({
@@ -225,8 +241,12 @@ export const updateTour = async (req: Request, res: Response) => {
           description: data.description,
           days: data.days,
           nights: data.nights,
+          price: data.price,
+          videoUrl: data.videoUrl,
           inclusion: data.inclusion,
           includedActivities: data.includedActivities,
+          excludes: data.excludes || [],
+          complementary: data.complementary || [],
           heroImageUrl: data.heroImageUrl,
           seoTitle: data.seoTitle,
           seoDescription: data.seoDescription,
@@ -238,7 +258,15 @@ export const updateTour = async (req: Request, res: Response) => {
       await tx.tourItineraryDay.deleteMany({ where: { tourId: id } });
       if (data.itineraryDays && data.itineraryDays.length > 0) {
         await tx.tourItineraryDay.createMany({
-          data: data.itineraryDays.map(d => ({ ...d, tourId: id }))
+          data: data.itineraryDays.map(d => ({
+            dayNumber: d.dayNumber,
+            title: d.title,
+            routeText: d.routeText,
+            details: d.details,
+            sortOrder: d.sortOrder,
+            images: d.images || [],
+            tourId: id
+          }))
         });
       }
 

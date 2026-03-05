@@ -20,19 +20,67 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('tourShortDesc').textContent = tour.shortDescription;
     document.getElementById('inquiryTourId').value = tour.id;
 
-    // 2. Description
+    // 2. Description & Video
     document.getElementById('tourFullDescription').textContent = tour.description;
 
-    // 3. Inclusions
+    if (tour.videoUrl) {
+      document.getElementById('tourVideoContainer').style.display = 'block';
+      let embedUrl = tour.videoUrl;
+      // Basic youtube watch to embed conversion if needed
+      if (embedUrl.includes('youtube.com/watch?v=')) {
+        embedUrl = embedUrl.replace('watch?v=', 'embed/');
+      }
+      document.getElementById('tourVideoFrame').src = embedUrl;
+    }
+
+    // 3. Inclusions & Sidebar Pricing
     const incList = document.getElementById('tourInclusionList');
+    const sidebarIncList = document.getElementById('tourSidebarInclusions');
     if (tour.inclusion && tour.inclusion.length) {
         tour.inclusion.forEach(item => {
             const li = document.createElement('li');
             li.textContent = item;
             incList.appendChild(li);
+
+            const sidebarLi = document.createElement('li');
+            sidebarLi.textContent = `✓ ${item}`;
+            sidebarLi.style.marginBottom = '5px';
+            sidebarIncList.appendChild(sidebarLi);
         });
     } else {
         incList.innerHTML = '<li>No inclusions listed</li>';
+        sidebarIncList.innerHTML = '<li>-</li>';
+    }
+
+    if (tour.price) {
+        document.getElementById('tourPrice').textContent = `LKR ${Number(tour.price).toLocaleString()}`;
+    } else {
+        document.getElementById('tourPrice').textContent = 'Contact for Price';
+    }
+
+    const sidebarExcList = document.getElementById('tourSidebarExcludes');
+    if (tour.excludes && tour.excludes.length) {
+        tour.excludes.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `✗ ${item}`;
+            li.style.marginBottom = '5px';
+            li.style.color = '#888';
+            sidebarExcList.appendChild(li);
+        });
+    } else {
+        sidebarExcList.innerHTML = '<li>-</li>';
+    }
+
+    const sidebarCompList = document.getElementById('tourSidebarComplementary');
+    if (tour.complementary && tour.complementary.length) {
+        tour.complementary.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `✦ ${item}`;
+            li.style.marginBottom = '5px';
+            sidebarCompList.appendChild(li);
+        });
+    } else {
+        sidebarCompList.innerHTML = '<li>-</li>';
     }
 
     // 4. Activities
@@ -54,6 +102,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         c.querySelector('.day-title').textContent = `Day ${day.dayNumber}: ${day.title || ''}`;
         c.querySelector('.day-route').textContent = day.routeText || '';
         c.querySelector('.day-details').textContent = day.details || '';
+
+        const imgGrid = c.querySelector('.day-images-grid');
+        if (day.images && day.images.length > 0) {
+            day.images.forEach(img => {
+                const i = document.createElement('img');
+                i.src = img;
+                i.style.width = '100%';
+                i.style.height = '150px';
+                i.style.objectFit = 'cover';
+                i.style.borderRadius = '4px';
+                imgGrid.appendChild(i);
+            });
+        }
         return c;
     }, 'No itinerary details');
 

@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  passwordHash  String
-  role          String    @default("ADMIN")
-  createdAt     DateTime  @default(now())
-  lastLoginAt   DateTime?
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  role         String    @default("ADMIN")
+  createdAt    DateTime  @default(now())
+  lastLoginAt  DateTime?
 }
 
 model SiteSetting {
@@ -52,27 +52,31 @@ model GalleryItem {
 }
 
 model Tour {
-  id                 String             @id @default(cuid())
+  id                 String   @id @default(cuid())
   name               String
-  slug               String             @unique
+  slug               String   @unique
   shortDescription   String   @db.Text
   description        String   @db.LongText
   days               Int
   nights             Int
+  price              Float?
+  videoUrl           String?
   inclusion          Json
   includedActivities Json
+  excludes           Json?
+  complementary      Json?
   heroImageUrl       String?
   seoTitle           String?
   seoDescription     String?
   ogImageUrl         String?
-  isPublished        Boolean            @default(false)
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
+  isPublished        Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
-  itineraryDays      TourItineraryDay[]
-  destinations       Destination[]
-  experiences        Experience[]
-  inquiries          Inquiry[]
+  itineraryDays TourItineraryDay[]
+  destinations  Destination[]
+  experiences   Experience[]
+  inquiries     Inquiry[]
 }
 
 model TourItineraryDay {
@@ -84,23 +88,24 @@ model TourItineraryDay {
   routeText String? @db.Text
   details   String? @db.Text
   sortOrder Int     @default(0)
+  images    Json?
 
   @@index([tourId])
 }
 
 model Destination {
-  id            String             @id @default(cuid())
+  id            String  @id @default(cuid())
   tourId        String?
-  tour          Tour?              @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tour          Tour?   @relation(fields: [tourId], references: [id], onDelete: Cascade)
   name          String
   slug          String
-  description   String   @db.Text
+  description   String  @db.Text
   mapImageUrl   String?
   routeImageUrl String?
-  routeText     String?  @db.Text
-  sortOrder     Int                @default(0)
+  routeText     String? @db.Text
+  sortOrder     Int     @default(0)
 
-  images        DestinationImage[]
+  images DestinationImage[]
 
   @@index([tourId])
 }
@@ -117,15 +122,15 @@ model DestinationImage {
 }
 
 model Experience {
-  id             String            @id @default(cuid())
+  id             String  @id @default(cuid())
   tourId         String?
-  tour           Tour?             @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tour           Tour?   @relation(fields: [tourId], references: [id], onDelete: Cascade)
   title          String
   description    String? @db.Text
   adventureItems Json
-  sortOrder      Int               @default(0)
+  sortOrder      Int     @default(0)
 
-  images         ExperienceImage[]
+  images ExperienceImage[]
 
   @@index([tourId])
 }
@@ -143,7 +148,7 @@ model ExperienceImage {
 
 model Inquiry {
   id             String   @id @default(cuid())
-  type           String   // TOUR, GENERAL
+  type           String // TOUR, GENERAL
   tourId         String?
   tour           Tour?    @relation(fields: [tourId], references: [id])
   fullName       String
