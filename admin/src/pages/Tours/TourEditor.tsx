@@ -13,10 +13,14 @@ type FormValues = {
   description: string;
   days: number;
   nights: number;
+  price?: number;
+  videoUrl?: string;
   heroImageUrl: string;
   isPublished: boolean;
   inclusion: { value: string }[]; // Wrap strings in objects for useFieldArray
   includedActivities: { value: string }[];
+  excludes: { value: string }[];
+  complementary: { value: string }[];
   seoTitle?: string;
   seoDescription?: string;
   itineraryDays: {
@@ -24,6 +28,7 @@ type FormValues = {
     title: string;
     routeText: string;
     details: string;
+    images: { imageUrl: string }[];
   }[];
   destinations: {
     id?: string;
@@ -61,6 +66,8 @@ const TourEditor: React.FC = () => {
       isPublished: false,
       inclusion: [],
       includedActivities: [],
+      excludes: [],
+      complementary: [],
       itineraryDays: [],
       destinations: [],
       experiences: []
@@ -69,6 +76,8 @@ const TourEditor: React.FC = () => {
 
   const { fields: inclusionFields, append: appendInc, remove: removeInc } = useFieldArray({ control, name: 'inclusion' });
   const { fields: activityFields, append: appendAct, remove: removeAct } = useFieldArray({ control, name: 'includedActivities' });
+  const { fields: excludeFields, append: appendExc, remove: removeExc } = useFieldArray({ control, name: 'excludes' });
+  const { fields: complementaryFields, append: appendComp, remove: removeComp } = useFieldArray({ control, name: 'complementary' });
   const { fields: itineraryFields, append: appendItin, remove: removeItin } = useFieldArray({ control, name: 'itineraryDays' });
   const { fields: destinationFields, append: appendDest, remove: removeDest } = useFieldArray({ control, name: 'destinations' });
   const { fields: experienceFields, append: appendExp, remove: removeExp } = useFieldArray({ control, name: 'experiences' });
@@ -80,6 +89,15 @@ const TourEditor: React.FC = () => {
         // Transform arrays of strings to objects for useFieldArray
         data.inclusion = data.inclusion?.map((s: string) => ({ value: s })) || [];
         data.includedActivities = data.includedActivities?.map((s: string) => ({ value: s })) || [];
+        data.excludes = data.excludes?.map((s: string) => ({ value: s })) || [];
+        data.complementary = data.complementary?.map((s: string) => ({ value: s })) || [];
+
+        if (data.itineraryDays) {
+          data.itineraryDays = data.itineraryDays.map((day: any) => ({
+            ...day,
+            images: day.images?.map((s: string) => ({ imageUrl: s })) || []
+          }));
+        }
 
         // Transform adventureItems inside experiences
         if (data.experiences) {
@@ -101,9 +119,18 @@ const TourEditor: React.FC = () => {
         ...data,
         days: Number(data.days),
         nights: Number(data.nights),
+        price: data.price ? Number(data.price) : null,
+        videoUrl: data.videoUrl || null,
         inclusion: data.inclusion.map(i => i.value),
         includedActivities: data.includedActivities.map(i => i.value),
-        itineraryDays: data.itineraryDays.map((d, idx) => ({ ...d, dayNumber: idx + 1, sortOrder: idx })),
+        excludes: data.excludes.map(i => i.value),
+        complementary: data.complementary.map(i => i.value),
+        itineraryDays: data.itineraryDays.map((d, idx) => ({
+          ...d,
+          dayNumber: idx + 1,
+          sortOrder: idx,
+          images: d.images.map((img: any) => img.imageUrl).filter(Boolean)
+        })),
         destinations: data.destinations.map((d, idx) => ({ ...d, sortOrder: idx })),
         experiences: data.experiences.map((e, idx) => ({
             ...e,
@@ -176,6 +203,14 @@ const TourEditor: React.FC = () => {
                    <label className="block text-sm font-medium text-gray-700">Nights</label>
                    <input type="number" {...register('nights')} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                 </div>
+                <div>
+                   <label className="block text-sm font-medium text-gray-700">Starting Price</label>
+                   <input type="number" step="0.01" {...register('price')} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Video URL (YouTube/Vimeo Embed or MP4)</label>
+                <input {...register('videoUrl')} placeholder="https://..." className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
               </div>
               <Controller
                 control={control}
@@ -239,6 +274,30 @@ const TourEditor: React.FC = () => {
                   <Plus className="w-4 h-4 mr-1"/> Add Activity
                 </button>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">Excludes</label>
+                {excludeFields.map((field, index) => (
+                  <div key={field.id} className="flex items-center mb-2">
+                    <input {...register(`excludes.${index}.value`)} className="flex-1 border border-gray-300 rounded-md p-1.5 text-sm" />
+                    <button type="button" onClick={() => removeExc(index)} className="ml-2 text-red-500"><Trash className="w-4 h-4"/></button>
+                  </div>
+                ))}
+                <button type="button" onClick={() => appendExc({ value: '' })} className="text-sm text-ocean flex items-center mt-2">
+                  <Plus className="w-4 h-4 mr-1"/> Add Exclude
+                </button>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2 mt-4">Complementary</label>
+                {complementaryFields.map((field, index) => (
+                  <div key={field.id} className="flex items-center mb-2">
+                    <input {...register(`complementary.${index}.value`)} className="flex-1 border border-gray-300 rounded-md p-1.5 text-sm" />
+                    <button type="button" onClick={() => removeComp(index)} className="ml-2 text-red-500"><Trash className="w-4 h-4"/></button>
+                  </div>
+                ))}
+                <button type="button" onClick={() => appendComp({ value: '' })} className="text-sm text-ocean flex items-center mt-2">
+                  <Plus className="w-4 h-4 mr-1"/> Add Complementary
+                </button>
+              </div>
             </div>
           )}
 
@@ -262,12 +321,14 @@ const TourEditor: React.FC = () => {
                        <textarea {...register(`itineraryDays.${index}.details`)} rows={2} className="w-full border p-1.5 rounded" />
                     </div>
                   </div>
+                  {/* Itinerary Images Nested Array */}
+                  <ItineraryImagesControl control={control} itinIndex={index} />
                   <button type="button" onClick={() => removeItin(index)} className="mt-2 text-red-500 text-xs flex items-center">
                     <Trash className="w-3 h-3 mr-1"/> Remove Day
                   </button>
                 </div>
               ))}
-              <button type="button" onClick={() => appendItin({ dayNumber: 0, title: '', routeText: '', details: '' })} className="bg-ocean text-white px-4 py-2 rounded text-sm flex items-center">
+              <button type="button" onClick={() => appendItin({ dayNumber: 0, title: '', routeText: '', details: '', images: [] })} className="bg-ocean text-white px-4 py-2 rounded text-sm flex items-center">
                 <Plus className="w-4 h-4 mr-2"/> Add Day
               </button>
             </div>
@@ -401,6 +462,29 @@ const AdventureItemsControl = ({ control, expIndex }: { control: any, expIndex: 
        </div>
      </div>
    )
+}
+
+// Helper component for Itinerary Images
+const ItineraryImagesControl = ({ control, itinIndex }: { control: any, itinIndex: number }) => {
+  const { fields, append, remove } = useFieldArray({ control, name: `itineraryDays.${itinIndex}.images` });
+  return (
+    <div className="bg-white p-3 rounded mt-4 border">
+      <label className="block text-xs font-bold text-gray-500 mb-2 uppercase">Day {itinIndex + 1} Images</label>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {fields.map((f, i) => (
+          <div key={f.id} className="relative">
+             <Controller control={control} name={`itineraryDays.${itinIndex}.images.${i}.imageUrl`} render={({field}) => (
+               <ImageUpload value={field.value} onChange={field.onChange} className="w-full" />
+             )} />
+             <button type="button" onClick={() => remove(i)} className="text-red-500 text-xs mt-1">Remove</button>
+          </div>
+        ))}
+        <button type="button" onClick={() => append({ imageUrl: '' })} className="border-2 border-dashed border-gray-300 rounded flex items-center justify-center h-24 hover:bg-gray-100">
+           <Plus className="w-5 h-5 text-gray-400" />
+        </button>
+      </div>
+    </div>
+  )
 }
 
 export default TourEditor;
